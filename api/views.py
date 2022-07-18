@@ -2,9 +2,8 @@ import jwt
 from django.contrib.auth import user_logged_in
 from rest_framework import viewsets, status, mixins
 from rest_framework.decorators import permission_classes, api_view
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.views import APIView
 from rest_framework_jwt.serializers import jwt_payload_handler
 
 from api.serializers import CategorySerializer, \
@@ -16,8 +15,8 @@ from shop import settings
 class CreateUserAPIView(mixins.ListModelMixin,
                         viewsets.GenericViewSet):
     queryset = User.objects.all()
-
     serializer_class = UserSerializer
+    permission_classes = (IsAuthenticated,)
 
     def post(self, request):
         user = request.data
