@@ -1,41 +1,16 @@
 from rest_framework import serializers
 
-from django.contrib.auth.models import User
-
-from main.models import UserProfile, Supplier, Discount, Category, Product
-
-
-class UserProfileSerializer(serializers.ModelSerializer):
-    user = serializers.StringRelatedField(read_only=True)
-
-    class Meta:
-        model = UserProfile
-        fields = '__all__'
-
-
-class RegisterSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(max_length=50, min_length=8, write_only=True)
-
-    class Meta:
-        model = User
-        fields = ['email', 'username', 'password']
-
-    def validate(self, attrs):
-        email = attrs.get('email', '')
-        username = attrs.get('username', '')
-        if not username.isalnum():
-            raise serializers.ValidationError(
-                'The user name should only contain alphanumeric characters')
-        return attrs
-
-    def create(self, validated_data):
-        return User.objects.create_user(**validated_data)
+from main.models import Supplier, Discount, Category, Product, User
 
 
 class UserSerializer(serializers.ModelSerializer):
-    class Meta:
+    date_joined = serializers.ReadOnlyField()
+
+    class Meta(object):
         model = User
-        fields = '__all__'
+        fields = ('id', 'email', 'first_name', 'last_name',
+                  'date_joined', 'password')
+        extra_kwargs = {'password': {'write_only': True}}
 
 
 class SupplierSerializer(serializers.ModelSerializer):
