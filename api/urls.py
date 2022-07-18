@@ -10,6 +10,8 @@ router.register(r'product', views.ProductViewSet)
 router.register(r'supplier', views.SupplierViewSet)
 router.register(r'discount', views.DiscountViewSet)
 router.register(r'category', views.CategoryViewSet)
+router.register(r'cart', views.CartViewSet)
+router.register(r'cart_content', views.CartContentViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
@@ -17,5 +19,3 @@ urlpatterns = [
     path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
 ]
-
-

@@ -106,3 +106,29 @@ class Category(models.Model):
 
     class Meta:
         unique_together = ['id', 'title']
+
+
+class Cart(models.Model):
+    session_key = models.CharField(max_length=999, blank=True, default='')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    total_cost = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f'{self.user}{self.session_key}'
+
+    def get_total(self):
+        items = CartContent.objects.filter(cart=self.id)
+        total = 0
+        for item in items:
+            total += item.product.price * item.qty
+        return total
+
+    def get_cart_content(self):
+        items = CartContent.objects.all()
+        return items
+
+
+class CartContent(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    qty = models.IntegerField(default=1)

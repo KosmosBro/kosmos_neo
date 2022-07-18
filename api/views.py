@@ -7,8 +7,8 @@ from rest_framework.response import Response
 from rest_framework_jwt.serializers import jwt_payload_handler
 
 from api.serializers import CategorySerializer, \
-    DiscountSerializer, SupplierSerializer, ProductSerializer, UserSerializer
-from main.models import Category, Discount, Supplier, Product, User
+    DiscountSerializer, SupplierSerializer, ProductSerializer, UserSerializer, CartSerializer, CartContentSerializer
+from main.models import Category, Discount, Supplier, Product, User, Cart, CartContent
 from shop import settings
 
 
@@ -75,3 +75,13 @@ def authenticate_user(request):
     except KeyError:
         res = {'error': 'please provide a email and a password'}
         return Response(res)
+
+
+class CartViewSet(viewsets.ModelViewSet):
+    queryset = Cart.objects.all()
+    serializer_class = CartSerializer
+
+
+class CartContentViewSet(viewsets.ModelViewSet):
+    queryset = CartContent.objects.all()
+    serializer_class = CartContentSerializer

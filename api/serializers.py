@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from main.models import Supplier, Discount, Category, Product, User
+from main.models import Supplier, Discount, Category, Product, User, Cart, CartContent
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -55,3 +55,15 @@ class ProductSerializer(serializers.ModelSerializer):
         for supplier in create_supplier:
             Supplier.objects.create(product=product, **supplier)
         return product
+
+
+class CartSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cart
+        fields = '__all__'
+
+
+class CartContentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CartContent
+        fields = '__all__'
