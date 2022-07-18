@@ -16,7 +16,7 @@ class CreateUserAPIView(mixins.ListModelMixin,
                         viewsets.GenericViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
 
     def post(self, request):
         user = request.data
