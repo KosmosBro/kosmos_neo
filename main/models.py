@@ -62,9 +62,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 class Product(models.Model):
     title = models.CharField(max_length=50, verbose_name='Название продукта')
     description = models.CharField(max_length=150, verbose_name='Описание продукта')
-    creation_date = models.DateTimeField(null=True, verbose_name='Дата создания продукта')
-    picture = models.ImageField(upload_to='images/', blank=True, verbose_name="Картинка продукта",
+    picture = models.ImageField(upload_to='images/', blank=True, null=True,  verbose_name="Картинка продукта",
                                 max_length=900)
+    creation_date = models.DateTimeField(null=True, verbose_name='Дата создания продукта')
     price = models.IntegerField(verbose_name="Цена продукта")
 
     def __str__(self):
