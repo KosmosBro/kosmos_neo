@@ -5,7 +5,7 @@ from rest_framework.decorators import permission_classes, api_view
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework_jwt.serializers import jwt_payload_handler
-
+from django.utils.translation import gettext_lazy as _
 from api.serializers import CategorySerializer, \
     DiscountSerializer, SupplierSerializer, ProductSerializer, UserSerializer, CartSerializer, CartContentSerializer
 from main.models import Category, Discount, Supplier, Product, User, Cart, CartContent
